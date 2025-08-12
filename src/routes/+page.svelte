@@ -20,9 +20,22 @@
         return rc;
     }
 
-    
-
     let color_options = $derived([ques, random_color(), random_color(), random_color()]);
+    let correct_option = $derived(0);
+
+    const shuffle_options = ({arr}: {arr: Array<Array<number>>}) => {
+        let correct_index = 0;
+        let n: number = arr.length;
+        for(let i = n-1; i > 0; i--) {
+            let j = Math.floor(Math.random()*(i+1));
+            if(j = correct_index) {correct_index=i};
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return [arr, correct_index];
+    }
+
+    let answer_matrix = $derived([color_options, correct_option]);
+    answer_matrix = shuffle_options({arr: color_options});
 
     const next_color = () => {
 
@@ -41,7 +54,7 @@
 </script>
 
 <div class="container">
-    <span class="rgbPicker">rgb({ques})</span>
+    <span class="rgbPicker">rgb({ques}): correct ans is: {correct_option}</span>
 
     <div class="options">
 
