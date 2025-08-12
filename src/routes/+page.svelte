@@ -4,6 +4,8 @@
     // user will be given an rgb value, and he will have to guess the color based on it. 4 buttons of different colors will be provided and he has to click on the
     // button he thinks is the correct color.
     let ques = $state([0,0,0]);
+    let correct_option = $state(0);
+    
 
     const randomInt = ({min, max}: {min: number, max: number}) => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -19,23 +21,6 @@
         let rc = [randomInt({min:0, max:255}), randomInt({min:0, max:255}),randomInt({min:0, max:255})];
         return rc;
     }
-
-    let color_options = $derived([ques, random_color(), random_color(), random_color()]);
-    let correct_option = $derived(0);
-
-    const shuffle_options = ({arr}: {arr: Array<Array<number>>}) => {
-        let correct_index = 0;
-        let n: number = arr.length;
-        for(let i = n-1; i > 0; i--) {
-            let j = Math.floor(Math.random()*(i+1));
-            if(j = correct_index) {correct_index=i};
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-        return [arr, correct_index];
-    }
-
-    let answer_matrix = $derived([color_options, correct_option]);
-    answer_matrix = shuffle_options({arr: color_options});
 
     const next_color = () => {
 
@@ -58,7 +43,7 @@
 
     <div class="options">
 
-        {#each color_options as color}
+        {#each shuffled_options as color}
             <button style="background-color: rgb({color})">
                 .
             </button>
