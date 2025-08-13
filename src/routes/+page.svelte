@@ -109,31 +109,46 @@
 	};
 </script>
 
-<div class="container">
-	{#if !start}
-		<button onclick={startGame}>Start</button>
-	{:else}
-		<span class="rgbPicker">rgb({ques})</span>
+<div class="app">
+    <div class="container">
+        {#if !start}
+            <button onclick={startGame} style="height: 100px; width: 400px; font-size: 400%; border-radius: 20%; background: linear-gradient(to bottom, #d12828, #d95f5f); outline: none; color: #ffffff">Start</button>
+        {:else}
+            <div class="rgbPicker">rgb({ques})</div>
 
-		<div class="options ">
-			{#each color_options as color}
-				<button
-					style="background-color: rgb({color}); font-size: 200%; height: 3rem; aspect-ratio: 1/1; border-radius: 20%; outline: none; "
-					id={String(color)}
-					onclick={() => check_option({ id_: String(color) })}
-					class:active={checked}
-				>
-					{String(color) === selected ? 'O' : 'X'}
-				</button>
-			{/each}
-		</div>
+            <div class="options ">
+                {#each color_options as color}
+                    <button
+                        style="background-color: rgb({color}); font-size: 200%; height: 10rem; aspect-ratio: 1/1; border-radius: 20%; outline: none;color: #ffffff"
+                        id={String(color)}
+                        onclick={() => check_option({ id_: String(color) })}
+                        class:active={checked}
+                    >
+                        {String(color) === selected ? 'O' : 'X'}
+                    </button>
+                {/each}
+            </div>
 
-		<button class="nextLevel" onclick={nextColor}>Next</button>
-		<!-- style="background-color: rgb({ques})"> -->
-		<span class="score">score: {score}</span>{/if}
+            <button class="nextLevel" onclick={nextColor}>Next</button>
+            <!-- style="background-color: rgb({ques})"> -->
+            <span class="score">score: {score}</span>{/if}
+    </div>
 </div>
 
 <style>
+
+    .app {
+        height: 100vh;
+		background: url("/bg1.jpeg");
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+    }
+
 	.container {
 		display: flex;
 		flex-direction: column;
@@ -141,15 +156,37 @@
         gap: 0.75rem;
         max-width: 248px;
         margin-inline: auto;
+        height: 100vh;
+        justify-content: center;
 	}
 
+    .rgbPicker {
+        margin-bottom: 5rem;
+        font-size: 300%;
+        color: rgb(66, 66, 66);
+        font-weight: 900;
+        border-radius: 20%;
+        background-color: transparent;
+    }
+
 	.nextLevel {
-		width: 100%;
+		width: 300%;
 		align-self: right 30px;
+        margin-top: 10rem;
+        height: 90px;
+        align-items: center;
+        font-size: 300%;
+        background-color: beige;
+        outline: none;
+        border-radius: 10%;
+
+
 	}
 
 	.score {
-		size: 300%;
+        margin-top: 1rem;
+		font-size: 300%;
+        color: red;
 	}
 
     .options {
